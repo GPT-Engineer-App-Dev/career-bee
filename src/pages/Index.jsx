@@ -1,6 +1,6 @@
 import { Container, Text, VStack, Heading, Box, Button, Stack, HStack, Icon } from "@chakra-ui/react";
 import { FaBriefcase, FaMapMarkerAlt, FaDollarSign } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 
@@ -12,6 +12,12 @@ const Index = () => {
     const jobs = JSON.parse(localStorage.getItem("jobListings")) || [];
     setJobListings(jobs);
   }, []);
+
+  const navigate = useNavigate();
+
+  const handleApplyNow = (job) => {
+    navigate("/apply-job", { state: { job } });
+  };
 
   return (
     <Container centerContent maxW="container.md" py={10}>
@@ -31,7 +37,7 @@ const Index = () => {
               <Text><Icon as={FaDollarSign} mr={2} />{job.salary}</Text>
             </HStack>
             <Stack direction="row" spacing={4} mt={4}>
-              <Button colorScheme="teal" variant="solid">Apply Now</Button>
+              <Button colorScheme="teal" variant="solid" onClick={() => handleApplyNow(job)}>Apply Now</Button>
               <Button colorScheme="teal" variant="outline">Save</Button>
             </Stack>
           </Box>
